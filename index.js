@@ -3,7 +3,7 @@ import axios from 'axios';
 import _ from 'lodash';
 import chalk from 'chalk';
 import moment from 'moment';
-import uuid from 'uuid'; 
+import { v4 as uuidv4 } from 'uuid'; 
 
 const app = express();
 const PORT = 3000;
@@ -20,10 +20,20 @@ app.listen(PORT, () => {
 app.get('/usuarios',async(req,res)=>{
 try {
     const userApi = await axios.get(apiUrl);
-    const data= userApi.data.results[0]{gender,name}
+
+    const data= userApi.data.results[0];
     console.log(data)
-    res.json(data)
+    const nombre= userApi.data.results[0].name.first;
+    console.log(nombre)
+    const apellido= userApi.data.results[0].name.last;
+    const genero = userApi.data.results[0].gender;
+    const id = uuidv4().slice(0, 6);
+    const tiempo= moment().format(formato);
+    usuarios.push({nombre, apellido, genero,id , tiempo});
+    res.json({usuarios});
+ 
 } catch (error) {
+    console.log('Archivo no visualizado' + error)
     
 }
 })  
